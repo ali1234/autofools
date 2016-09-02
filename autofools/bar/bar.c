@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "libfoo.h"
-#include "libbar.h"
+#include "../foo/foo.h"
+#include "bar.h"
 
 void bar(void)
 {

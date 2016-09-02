@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 
 # get compiler
 if [ ! -d gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf ]; then
@@ -11,19 +11,16 @@ rm -rf autofools-native autofools-cross
 cp -a autofools autofools-native
 cp -a autofools autofools-cross
 
-
 cd autofools-native
 libtoolize && aclocal && autoconf && automake --add-missing
 ./configure
 make
 cd ..
 
+#export LDFLAGS="-Wl,--warn-unresolved-symbols"
 
 cd autofools-cross
 libtoolize && aclocal && autoconf && automake --add-missing
 ./configure --build=x86_64-linux-gnu --host=arm-linux-gnueabihf
 strace -f -e open -o "!grep libfoo" make
 cd ..
-
-
-

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "libfoo.h"
+#include "foo.h"
 
 void foo(void)
 {
