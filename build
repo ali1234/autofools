@@ -22,5 +22,5 @@ cd ..
 cd autofools-cross
 libtoolize && aclocal && autoconf && automake --add-missing
 ./configure --build=x86_64-linux-gnu --host=arm-linux-gnueabihf
-strace -f -e open -o "!grep libfoo" make
+strace -f -e file -o "!grep libfoo" make
 cd ..
