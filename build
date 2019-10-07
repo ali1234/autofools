@@ -1,26 +1,34 @@
 #!/bin/sh
 
 # get compiler
-if [ ! -d gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf ]; then
-  wget -N https://releases.linaro.org/archive/15.02/components/toolchain/binaries/arm-linux-gnueabihf/gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf.tar.xz
-  tar -xf gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf.tar.xz
+#if [ ! -d gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf ]; then
+#  wget -N https://releases.linaro.org/archive/15.02/components/toolchain/binaries/arm-linux-gnueabihf/gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf.tar.xz
+#  tar -xf gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf.tar.xz
+#fi
+#export PATH=${PWD}/gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf/bin:$PATH
+
+
+if [ ! -d gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf ]; then
+  wget -N https://releases.linaro.org/components/toolchain/binaries/7.4-2019.02/arm-linux-gnueabihf/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
+  tar -xf gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
 fi
-export PATH=${PWD}/gcc-linaro-4.9-2015.02-3-x86_64_arm-linux-gnueabihf/bin:$PATH
+export PATH=${PWD}/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin:$PATH
 
 rm -rf autofools-native autofools-cross
-cp -a autofools autofools-native
+#cp -a autofools autofools-native
 cp -a autofools autofools-cross
 
-cd autofools-native
-libtoolize && aclocal && autoconf && automake --add-missing
-./configure
-make
-cd ..
+#cd autofools-native
+#libtoolize && aclocal && autoconf && automake --add-missing
+#./configure
+#make
+#cd ..
 
 #export LDFLAGS="-Wl,--warn-unresolved-symbols"
 
 cd autofools-cross
 libtoolize && aclocal && autoconf && automake --add-missing
-./configure --build=x86_64-linux-gnu --host=arm-linux-gnueabihf
-strace -f -e file -o "!grep libfoo" make
+./configure --build=x86_64-linux-gnu --host=arm-linux-gnueabihf --with-sysroot=/home/al/Source/rpi-ramdisk/sysroot/sysroot --enable-fast-install
+#strace -f -e file -o "!grep libfoo.so" make
+make
 cd ..
